@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { PrimeReactProvider } from 'primereact/api';
 import { useTheme } from './hooks/useTheme';
@@ -30,7 +30,7 @@ function App() {
   return (
     <PrimeReactProvider>
       <AppThemeWrapper />
-      <BrowserRouter>
+      <HashRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route
@@ -58,7 +58,7 @@ function App() {
           </Route>
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
       <Toaster
         position="top-right"
         toastOptions={{
