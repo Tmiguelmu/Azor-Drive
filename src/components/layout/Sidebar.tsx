@@ -142,61 +142,8 @@ export const Sidebar = ({ collapsed, mobileOpen, onCloseMobile }: SidebarProps) 
           ))}
         </div>
 
-        {/* Footer usuario */}
+        {/* Footer */}
         <div className="sidebar-footer">
-          {user && !collapsed && (
-            <div style={{
-              marginBottom: '0.8rem',
-              paddingBottom: '0.8rem',
-              borderBottom: '1px solid rgba(255,255,255,0.08)',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.75rem',
-            }}>
-              <div style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '50%',
-                background: 'var(--color-gold-500)',
-                color: '#1B2A4A',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.78rem',
-                fontWeight: 800,
-                flexShrink: 0,
-              }}>
-                {getInitials(user.nombre)}
-              </div>
-              <div style={{ minWidth: 0 }}>
-                <div style={{ color: 'white', fontSize: '0.85rem', fontWeight: 700, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {user.nombre}
-                </div>
-                <div style={{ color: 'var(--color-gold-400)', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.5px' }}>
-                  {user.email}
-                </div>
-              </div>
-            </div>
-          )}
-          {user && collapsed && (
-            <div style={{ textAlign: 'center', marginBottom: '0.75rem' }}>
-              <div style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '50%',
-                background: 'var(--color-gold-500)',
-                color: '#1B2A4A',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '0.78rem',
-                fontWeight: 800,
-                margin: '0 auto',
-              }}>
-                {getInitials(user.nombre)}
-              </div>
-            </div>
-          )}
           <Button
             icon="pi pi-sign-out"
             label={collapsed ? undefined : 'Cerrar Sesion'}
