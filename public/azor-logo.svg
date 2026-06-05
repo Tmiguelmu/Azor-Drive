@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <rect width="200" height="60" rx="8" fill="#1B2A4A"/>
+  <text x="20" y="38" font-family="Arial, sans-serif" font-size="28" font-weight="bold" fill="#5A9BD5" letter-spacing="3">AZOR</text>
+  <text x="108" y="38" font-family="Arial, sans-serif" font-size="12" fill="#3B6CB4" letter-spacing="1">AERO</text>
+  <path d="M150 15 L185 30 L150 45 L155 30 Z" fill="#3B6CB4" opacity="0.8"/>
+</svg>

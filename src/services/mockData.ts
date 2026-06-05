@@ -1,0 +1,411 @@
+// ============================================================
+// DATOS MOCK - Azor Drive
+// Datos dummy realistas de aviación mexicana
+// ============================================================
+
+import type {
+  User,
+  Cliente,
+  AgrupacionFacturacion,
+  Servicio,
+  Inventario,
+  OrdenTrabajo,
+  Tarea,
+  MovimientoInventario,
+} from '../types';
+
+// ------ USUARIOS ------
+export const MOCK_USERS: User[] = [
+  { id: 'u1', nombre: 'Administrador Sistema', email: 'admin@azor.com', rol: 'admin', activo: true },
+  { id: 'u2', nombre: 'Gerencia General', email: 'gerencia@azor.com', rol: 'gerencia', activo: true },
+  { id: 'u3', nombre: 'Ing. Carlos Mendoza', email: 'ingenieria@azor.com', rol: 'ingenieria', activo: true },
+  { id: 'u4', nombre: 'Inspector Roberto Ávila', email: 'inspector@azor.com', rol: 'inspector', activo: true },
+  { id: 'u5', nombre: 'Téc. Juan López', email: 'mecanico@azor.com', rol: 'mecanico', activo: true },
+  { id: 'u6', nombre: 'Téc. Cert. Miguel Flores', email: 'certificado@azor.com', rol: 'certificado', activo: true },
+  { id: 'u7', nombre: 'Almacén Pedro Ruiz', email: 'almacen@azor.com', rol: 'almacen', activo: true },
+  { id: 'u8', nombre: 'Téc. Ana García', email: 'ana.garcia@azor.com', rol: 'mecanico', activo: true },
+];
+
+export const USER_PASSWORDS: Record<string, string> = {
+  'admin@azor.com': 'Admin123!',
+  'gerencia@azor.com': 'Gerencia123!',
+  'ingenieria@azor.com': 'Ingenieria123!',
+  'inspector@azor.com': 'Inspector123!',
+  'mecanico@azor.com': 'Mecanico123!',
+  'certificado@azor.com': 'Certificado123!',
+  'almacen@azor.com': 'Almacen123!',
+  'ana.garcia@azor.com': 'Mecanico123!',
+};
+
+// ------ CLIENTES ------
+export const MOCK_CLIENTES: Cliente[] = [
+  {
+    id: 'c1', clave: 'AER001', nombre: 'Aeromexico Connect', razonSocial: 'Aerovías de México S.A. de C.V.',
+    rfc: 'AME880912HT7', direccion: 'Blvd. Puerto Aéreo 485', ciudad: 'Ciudad de México',
+    estado: 'CDMX', cp: '15620', telefono: '55-5133-4000', email: 'mantenimiento@aeromexico.com', activo: true,
+  },
+  {
+    id: 'c2', clave: 'VOL001', nombre: 'Volaris', razonSocial: 'Concesionaria Vuela Compañía de Aviación S.A. de C.V.',
+    rfc: 'CVC051017M49', direccion: 'Av. Antonio Dovalí Jaime 70, Torre B', ciudad: 'Ciudad de México',
+    estado: 'CDMX', cp: '01210', telefono: '55-1102-8000', email: 'tecnica@volaris.com', activo: true,
+  },
+  {
+    id: 'c3', clave: 'VIV001', nombre: 'VivaAerobus', razonSocial: 'Aeroenlaces Nacionales S.A. de C.V.',
+    rfc: 'ANS060301M45', direccion: 'Av. del Trabajo 104', ciudad: 'Monterrey',
+    estado: 'Nuevo León', cp: '66600', telefono: '81-8215-0150', email: 'flota@vivaaerobus.com', activo: true,
+  },
+  {
+    id: 'c4', clave: 'MAG001', nombre: 'Magnicharters', razonSocial: 'Magnicharters S.A. de C.V.',
+    rfc: 'MAG920715KQ3', direccion: 'Aeropuerto Internacional de Guadalajara', ciudad: 'Guadalajara',
+    estado: 'Jalisco', cp: '45659', telefono: '33-3812-1010', email: 'operaciones@magni.com.mx', activo: true,
+  },
+  {
+    id: 'c5', clave: 'CES001', nombre: 'Cessna Aviation México', razonSocial: 'Cesna Aviación México S. de R.L.',
+    rfc: 'CAM010301AB2', direccion: 'Hangar 14, Aeropuerto del Norte', ciudad: 'Monterrey',
+    estado: 'Nuevo León', cp: '66000', telefono: '81-8340-9200', email: 'maint@cessna.mx', activo: true,
+  },
+  {
+    id: 'c6', clave: 'ABL001', nombre: 'Aerolineas Bolivar', razonSocial: 'Transportes Aéreos Bolivar S.A.',
+    rfc: 'TAB850430XY1', direccion: 'Hangar 22, AICM Terminal 2', ciudad: 'Ciudad de México',
+    estado: 'CDMX', cp: '15710', telefono: '55-5571-8900', email: 'flota@aerbolivar.mx', activo: false,
+  },
+];
+
+// ------ AGRUPACIONES DE FACTURACIÓN ------
+export const MOCK_AGRUPACIONES: AgrupacionFacturacion[] = [
+  { id: 'ag1', clave: 'SA', nombre: 'Salidas Almacén' },
+  { id: 'ag2', clave: 'SV', nombre: 'Suministros Varios' },
+  { id: 'ag3', clave: 'MM', nombre: 'Mantenimiento Mecánico' },
+  { id: 'ag4', clave: 'SL', nombre: 'Servicio de Línea' },
+  { id: 'ag5', clave: 'MR', nombre: 'Mantenimiento y Reparación' },
+  { id: 'ag6', clave: 'IF', nombre: 'Inspección y Firma' },
+  { id: 'ag7', clave: 'CE', nombre: 'Certificación' },
+  { id: 'ag8', clave: 'TR', nombre: 'Trabajos de Radio' },
+];
+
+// ------ SERVICIOS ------
+export const MOCK_SERVICIOS: Servicio[] = [
+  { id: 's1', clave: 'INS-100H', descripcion: 'Inspección de 100 Horas', agrupacionId: 'ag6', agrupacionNombre: 'Inspección y Firma', precioVenta: 45000, precioAnterior: 42000, activo: true },
+  { id: 's2', clave: 'INS-500H', descripcion: 'Inspección de 500 Horas', agrupacionId: 'ag6', agrupacionNombre: 'Inspección y Firma', precioVenta: 85000, precioAnterior: 78000, activo: true },
+  { id: 's3', clave: 'MTO-MOT', descripcion: 'Mantenimiento de Motor Reciprocante', agrupacionId: 'ag5', agrupacionNombre: 'Mantenimiento y Reparación', precioVenta: 120000, precioAnterior: 110000, activo: true },
+  { id: 's4', clave: 'MTO-TREN', descripcion: 'Revisión de Tren de Aterrizaje', agrupacionId: 'ag3', agrupacionNombre: 'Mantenimiento Mecánico', precioVenta: 35000, precioAnterior: 32000, activo: true },
+  { id: 's5', clave: 'MTO-AVN', descripcion: 'Mantenimiento de Aviónica', agrupacionId: 'ag8', agrupacionNombre: 'Trabajos de Radio', precioVenta: 28000, precioAnterior: 25000, activo: true },
+  { id: 's6', clave: 'MTO-HID', descripcion: 'Revisión Sistema Hidráulico', agrupacionId: 'ag3', agrupacionNombre: 'Mantenimiento Mecánico', precioVenta: 18000, precioAnterior: 16500, activo: true },
+  { id: 's7', clave: 'SL-DIARIO', descripcion: 'Servicio de Línea Diario', agrupacionId: 'ag4', agrupacionNombre: 'Servicio de Línea', precioVenta: 5500, precioAnterior: 5000, activo: true },
+  { id: 's8', clave: 'CERT-AWR', descripcion: 'Certificación Airworthiness Review', agrupacionId: 'ag7', agrupacionNombre: 'Certificación', precioVenta: 65000, precioAnterior: 60000, activo: true },
+  { id: 's9', clave: 'MTO-FRENOS', descripcion: 'Mantenimiento del Sistema de Frenos', agrupacionId: 'ag3', agrupacionNombre: 'Mantenimiento Mecánico', precioVenta: 22000, precioAnterior: 20000, activo: true },
+  { id: 's10', clave: 'MTO-ELECT', descripcion: 'Revisión Sistema Eléctrico', agrupacionId: 'ag3', agrupacionNombre: 'Mantenimiento Mecánico', precioVenta: 15000, precioAnterior: 14000, activo: true },
+  { id: 's11', clave: 'INS-ANUAL', descripcion: 'Inspección Anual Completa', agrupacionId: 'ag6', agrupacionNombre: 'Inspección y Firma', precioVenta: 95000, precioAnterior: 88000, activo: true },
+  { id: 's12', clave: 'MTO-HLICE', descripcion: 'Mantenimiento de Hélice', agrupacionId: 'ag5', agrupacionNombre: 'Mantenimiento y Reparación', precioVenta: 42000, precioAnterior: 38000, activo: false },
+  { id: 's13', clave: 'SUM-LUB', descripcion: 'Suministro de Lubricantes', agrupacionId: 'ag2', agrupacionNombre: 'Suministros Varios', precioVenta: 3500, precioAnterior: 3200, activo: true },
+  { id: 's14', clave: 'SUM-FLUID', descripcion: 'Suministro Fluido Hidráulico', agrupacionId: 'ag2', agrupacionNombre: 'Suministros Varios', precioVenta: 4800, precioAnterior: 4500, activo: true },
+  { id: 's15', clave: 'MTO-NEUM', descripcion: 'Reemplazo de Neumáticos', agrupacionId: 'ag3', agrupacionNombre: 'Mantenimiento Mecánico', precioVenta: 32000, precioAnterior: 29000, activo: true },
+];
+
+// ------ INVENTARIO ------
+export const MOCK_INVENTARIO: Inventario[] = [
+  { id: 'inv1', codigo: 'F-LYC-OIL-50', descripcion: 'Aceite Aeronáutico Lycoming 15W-50 (Qt)', categoria: 'Lubricantes', cantidad: 48, cantidadMinima: 20, unidad: 'Qt', ubicacion: 'A1-E1', proveedor: 'Phillips 66', costo: 420, activo: true },
+  { id: 'inv2', codigo: 'F-CONT-OIL-M', descripcion: 'Aceite Continental Multigrade SAE 40 (Qt)', categoria: 'Lubricantes', cantidad: 36, cantidadMinima: 20, unidad: 'Qt', ubicacion: 'A1-E2', proveedor: 'Aeroshell', costo: 390, activo: true },
+  { id: 'inv3', codigo: 'F-HYD-5606H', descripcion: 'Fluido Hidráulico MIL-PRF-5606 (Gal)', categoria: 'Hidráulicos', cantidad: 12, cantidadMinima: 10, unidad: 'Gal', ubicacion: 'A2-E1', proveedor: 'Royco', costo: 1850, activo: true },
+  { id: 'inv4', codigo: 'P-SPARK-REM40E', descripcion: 'Bujía Champion REM40E', categoria: 'Encendido', cantidad: 24, cantidadMinima: 12, unidad: 'pza', ubicacion: 'B1-E1', proveedor: 'Champion Aerospace', costo: 980, activo: true },
+  { id: 'inv5', codigo: 'P-SPARK-RHB32E', descripcion: 'Bujía Champion RHB32E', categoria: 'Encendido', cantidad: 8, cantidadMinima: 12, unidad: 'pza', ubicacion: 'B1-E2', proveedor: 'Champion Aerospace', costo: 1050, activo: true },
+  { id: 'inv6', codigo: 'P-FILTER-OIL-LYC', descripcion: 'Filtro de Aceite Lycoming (Champion CH48110)', categoria: 'Filtros', cantidad: 15, cantidadMinima: 8, unidad: 'pza', ubicacion: 'B2-E1', proveedor: 'Champion Aerospace', costo: 1200, activo: true },
+  { id: 'inv7', codigo: 'P-FILTER-FUEL-MAIN', descripcion: 'Filtro de Combustible Principal (AN-6097)', categoria: 'Filtros', cantidad: 10, cantidadMinima: 5, unidad: 'pza', ubicacion: 'B2-E2', proveedor: 'Andair', costo: 2400, activo: true },
+  { id: 'inv8', codigo: 'P-BRAKE-DISC-C182', descripcion: 'Disco de Freno Cessna 182 (Cleveland 40-97A)', categoria: 'Frenos', cantidad: 4, cantidadMinima: 4, unidad: 'pza', ubicacion: 'C1-E1', proveedor: 'Cleveland Aircraft Products', costo: 8500, activo: true },
+  { id: 'inv9', codigo: 'P-BRAKE-PAD-C182', descripcion: 'Pastilla de Freno Cessna 182 (Cleveland 066-06600)', categoria: 'Frenos', cantidad: 8, cantidadMinima: 4, unidad: 'pza', ubicacion: 'C1-E2', proveedor: 'Cleveland Aircraft Products', costo: 3200, activo: true },
+  { id: 'inv10', codigo: 'P-TIRE-MAIN-600-6', descripcion: 'Neumático Principal 6.00-6 (4PR)', categoria: 'Neumáticos', cantidad: 3, cantidadMinima: 4, unidad: 'pza', ubicacion: 'C2-E1', proveedor: 'Goodyear Aerospace', costo: 12800, activo: true },
+  { id: 'inv11', codigo: 'P-TIRE-NOSE-500-5', descripcion: 'Neumático de Nariz 5.00-5 (4PR)', categoria: 'Neumáticos', cantidad: 2, cantidadMinima: 2, unidad: 'pza', ubicacion: 'C2-E2', proveedor: 'Goodyear Aerospace', costo: 9500, activo: true },
+  { id: 'inv12', codigo: 'P-VHF-COAX-RG400', descripcion: 'Cable Coaxial RG-400 (Metro)', categoria: 'Aviónica', cantidad: 50, cantidadMinima: 10, unidad: 'mt', ubicacion: 'D1-E1', proveedor: 'Belden', costo: 185, activo: true },
+  { id: 'inv13', codigo: 'P-ELEC-WIRE-22AWG', descripcion: 'Cable Eléctrico Aeronáutico 22 AWG (Metro)', categoria: 'Eléctrico', cantidad: 200, cantidadMinima: 50, unidad: 'mt', ubicacion: 'D1-E2', proveedor: 'Spec 55', costo: 45, activo: true },
+  { id: 'inv14', codigo: 'F-GREASE-M2582', descripcion: 'Grasa MIL-G-23827 (Lb)', categoria: 'Lubricantes', cantidad: 6, cantidadMinima: 4, unidad: 'Lb', ubicacion: 'A1-E3', proveedor: 'Aeroshell', costo: 850, activo: true },
+  { id: 'inv15', codigo: 'P-RING-PISTON-LYC', descripcion: 'Anillo de Pistón Lycoming O-360 (Kit)', categoria: 'Motor', cantidad: 2, cantidadMinima: 2, unidad: 'kit', ubicacion: 'E1-E1', proveedor: 'Lycoming Engines', costo: 18500, activo: true },
+  { id: 'inv16', codigo: 'P-GAKET-OIL-SUMP', descripcion: 'Empaque Carter de Aceite Lycoming', categoria: 'Motor', cantidad: 5, cantidadMinima: 3, unidad: 'pza', ubicacion: 'E1-E2', proveedor: 'Lycoming Engines', costo: 1400, activo: true },
+  { id: 'inv17', codigo: 'F-PRIMER-ZINCPHOS', descripcion: 'Primer Zinc Fosfato (Litro)', categoria: 'Pintura', cantidad: 8, cantidadMinima: 5, unidad: 'Lt', ubicacion: 'F1-E1', proveedor: 'AeroCoat', costo: 1200, activo: true },
+  { id: 'inv18', codigo: 'P-BULB-NAV-WLED', descripcion: 'Foco LED Luz de Navegación (Wingtip)', categoria: 'Eléctrico', cantidad: 6, cantidadMinima: 4, unidad: 'pza', ubicacion: 'D2-E1', proveedor: 'Whelen Engineering', costo: 2800, activo: true },
+  { id: 'inv19', codigo: 'P-PITCH-CTRL-CABLE', descripcion: 'Cable de Control de Cabeceo (6ft)', categoria: 'Controles', cantidad: 3, cantidadMinima: 2, unidad: 'pza', ubicacion: 'G1-E1', proveedor: 'Steen Aero Lab', costo: 4500, activo: true },
+  { id: 'inv20', codigo: 'P-BATTERY-24V-25AH', descripcion: 'Batería Aeronáutica 24V 25Ah', categoria: 'Eléctrico', cantidad: 2, cantidadMinima: 2, unidad: 'pza', ubicacion: 'D2-E2', proveedor: 'Concorde Battery', costo: 9800, activo: true },
+  { id: 'inv21', codigo: 'F-SEALANT-PR-1422', descripcion: 'Sellante Aeronáutico PR-1422 (Oz)', categoria: 'Sellantes', cantidad: 12, cantidadMinima: 5, unidad: 'Oz', ubicacion: 'H1-E1', proveedor: 'PPG Aerospace', costo: 780, activo: true },
+  { id: 'inv22', codigo: 'P-ALTIMETER-STATIC', descripcion: 'Puerto Estático AN-5815', categoria: 'Instrumentos', cantidad: 4, cantidadMinima: 2, unidad: 'pza', ubicacion: 'I1-E1', proveedor: 'Mid-Continent Instruments', costo: 3200, activo: true },
+  { id: 'inv23', codigo: 'P-FILTER-AIR-IND', descripcion: 'Filtro de Entrada de Aire Inducción', categoria: 'Filtros', cantidad: 7, cantidadMinima: 4, unidad: 'pza', ubicacion: 'B3-E1', proveedor: 'Brackett Aircraft', costo: 1800, activo: true },
+  { id: 'inv24', codigo: 'F-CLEANER-AERO-SOL', descripcion: 'Limpiador Aeronáutico (Spray 16oz)', categoria: 'Consumibles', cantidad: 20, cantidadMinima: 8, unidad: 'pza', ubicacion: 'J1-E1', proveedor: 'LPS Labs', costo: 320, activo: true },
+  { id: 'inv25', codigo: 'P-PROP-BLADE-HARTZELL', descripcion: 'Pala de Hélice Hartzell HC-C2YK-1F (Reacondicionada)', categoria: 'Hélice', cantidad: 1, cantidadMinima: 1, unidad: 'pza', ubicacion: 'K1-E1', proveedor: 'Hartzell Propeller', costo: 85000, activo: true },
+  { id: 'inv26', codigo: 'P-MUFFLER-EXHAUST', descripcion: 'Silenciador de Escape Lycoming O-320', categoria: 'Motor', cantidad: 1, cantidadMinima: 1, unidad: 'pza', ubicacion: 'E2-E1', proveedor: 'Cessna Parts', costo: 22000, activo: true },
+  { id: 'inv27', codigo: 'P-GASKET-CYLINDER', descripcion: 'Empaque de Cilindro Lycoming (Juego)', categoria: 'Motor', cantidad: 3, cantidadMinima: 2, unidad: 'juego', ubicacion: 'E1-E3', proveedor: 'Lycoming Engines', costo: 2800, activo: true },
+  { id: 'inv28', codigo: 'F-TORQUE-SEAL', descripcion: 'Torque Seal Indicador (Tubo)', categoria: 'Consumibles', cantidad: 15, cantidadMinima: 5, unidad: 'tubo', ubicacion: 'J1-E2', proveedor: 'Loctite Aerospace', costo: 280, activo: true },
+  { id: 'inv29', codigo: 'P-PIN-COTTER-STL', descripcion: 'Pasador de Chaveta Acero Inox. (Bolsa 50pz)', categoria: 'Ferretería', cantidad: 10, cantidadMinima: 4, unidad: 'bolsa', ubicacion: 'L1-E1', proveedor: 'Aircraft Spruce', costo: 350, activo: true },
+  { id: 'inv30', codigo: 'P-BOLT-AN3-AN4', descripcion: 'Tornillos Aeronáuticos AN3/AN4 (Surtido 100pz)', categoria: 'Ferretería', cantidad: 8, cantidadMinima: 5, unidad: 'paq', ubicacion: 'L1-E2', proveedor: 'Aircraft Spruce', costo: 1200, activo: true },
+];
+
+// ------ ÓRDENES DE TRABAJO ------
+export const MOCK_ORDENES: OrdenTrabajo[] = [
+  {
+    id: 'ot1', folio: 'OT-2024-001', clienteId: 'c1', clienteNombre: 'Aeromexico Connect',
+    matricula: 'XA-AMC', serie: '18281234', marca: 'Cessna', modelo: '182T Skylane',
+    planeadorHrs: 4820, motorHrs1: 1250, ciclos1: 3100, aterrizajes: 3100,
+    comentarios: 'Inspección de 100 horas programada. Aeronave llegó con reporte de vibración en motor.',
+    estado: 'en_progreso', fechaCreacion: '2024-11-01', creadoPor: 'u1',
+    tareas: ['t1', 't2', 't3'],
+  },
+  {
+    id: 'ot2', folio: 'OT-2024-002', clienteId: 'c2', clienteNombre: 'Volaris',
+    matricula: 'XA-VLR', serie: '43210987', marca: 'Piper', modelo: 'PA-28-181 Archer',
+    planeadorHrs: 2340, motorHrs1: 980, ciclos1: 1850, aterrizajes: 1850,
+    comentarios: 'Revisión de tren de aterrizaje. Reporte de ruido en rueda principal derecha.',
+    estado: 'activa', fechaCreacion: '2024-11-05', creadoPor: 'u1',
+    tareas: ['t4'],
+  },
+  {
+    id: 'ot3', folio: 'OT-2024-003', clienteId: 'c3', clienteNombre: 'VivaAerobus',
+    matricula: 'XA-VVB', serie: '17654321', marca: 'Beechcraft', modelo: 'Bonanza G36',
+    planeadorHrs: 6120, motorHrs1: 1820, ciclos1: 4900, aterrizajes: 4900,
+    comentarios: 'Mantenimiento anual completo. Incluye motor y aviónica.',
+    estado: 'terminada', fechaCreacion: '2024-10-10', fechaCierre: '2024-10-28', creadoPor: 'u1',
+    tareas: ['t5', 't6'],
+  },
+  {
+    id: 'ot4', folio: 'OT-2024-004', clienteId: 'c4', clienteNombre: 'Magnicharters',
+    matricula: 'XA-MGN', serie: '55009911', marca: 'Cirrus', modelo: 'SR22T',
+    planeadorHrs: 1890, motorHrs1: 1890, ciclos1: 2100, aterrizajes: 2100,
+    comentarios: 'Reemplazo de bujías y filtros. Revisión de sistemas.',
+    estado: 'terminada', fechaCreacion: '2024-10-20', fechaCierre: '2024-10-25', creadoPor: 'u1',
+    tareas: ['t7'],
+  },
+  {
+    id: 'ot5', folio: 'OT-2024-005', clienteId: 'c5', clienteNombre: 'Cessna Aviation México',
+    matricula: 'XB-CES', serie: '21445566', marca: 'Cessna', modelo: '172S Skyhawk SP',
+    planeadorHrs: 3450, motorHrs1: 3450, ciclos1: 5200, aterrizajes: 5200,
+    comentarios: 'Inspección 500 horas. Revisión completa de sistemas.',
+    estado: 'activa', fechaCreacion: '2024-11-08', creadoPor: 'u1',
+    tareas: ['t8', 't9'],
+  },
+  {
+    id: 'ot6', folio: 'OT-2024-006', clienteId: 'c1', clienteNombre: 'Aeromexico Connect',
+    matricula: 'XA-AMX', serie: '18298765', marca: 'Cessna', modelo: '182T Skylane',
+    planeadorHrs: 5210, motorHrs1: 1640, ciclos1: 3420, aterrizajes: 3420,
+    comentarios: 'Falla en sistema eléctrico. Luces de navegación no funcionan.',
+    estado: 'cancelada', fechaCreacion: '2024-09-15', fechaCierre: '2024-09-20', creadoPor: 'u1',
+    tareas: [],
+  },
+  {
+    id: 'ot7', folio: 'OT-2024-007', clienteId: 'c2', clienteNombre: 'Volaris',
+    matricula: 'XA-VLP', serie: '43218800', marca: 'Piper', modelo: 'PA-44-180 Seminole',
+    planeadorHrs: 4100, motorHrs1: 980, motorHrs2: 975, ciclos1: 3200, aterrizajes: 3200,
+    comentarios: 'Mantenimiento motor izquierdo y derecho. Cambio de aceite y filtros.',
+    estado: 'activa', fechaCreacion: '2024-11-10', creadoPor: 'u1',
+    tareas: ['t10'],
+  },
+  {
+    id: 'ot8', folio: 'OT-2024-008', clienteId: 'c5', clienteNombre: 'Cessna Aviation México',
+    matricula: 'XB-CES2', serie: '21567890', marca: 'Cessna', modelo: '206H Stationair',
+    planeadorHrs: 7800, motorHrs1: 2100, ciclos1: 6500, aterrizajes: 6500,
+    comentarios: 'Overhaul completo. Motor al límite de TBO.',
+    estado: 'activa', fechaCreacion: '2024-11-12', creadoPor: 'u1',
+    tareas: ['t11', 't12'],
+  },
+  {
+    id: 'ot9', folio: 'OT-2024-009', clienteId: 'c3', clienteNombre: 'VivaAerobus',
+    matricula: 'XA-VVC', serie: '17998877', marca: 'Diamond', modelo: 'DA40 NG',
+    planeadorHrs: 1200, motorHrs1: 1200, ciclos1: 1800, aterrizajes: 1800,
+    comentarios: 'Servicio de línea diario. Revisión pre-vuelo extendida.',
+    estado: 'en_progreso', fechaCreacion: '2024-11-13', creadoPor: 'u1',
+    tareas: ['t13'],
+  },
+  {
+    id: 'ot10', folio: 'OT-2024-010', clienteId: 'c4', clienteNombre: 'Magnicharters',
+    matricula: 'XA-MGP', serie: '55012233', marca: 'Tecnam', modelo: 'P2006T',
+    planeadorHrs: 890, motorHrs1: 445, motorHrs2: 440, ciclos1: 1200, aterrizajes: 1200,
+    comentarios: 'Revisión post-incidente. Inspección de fuselaje y sistemas.',
+    estado: 'activa', fechaCreacion: '2024-11-14', creadoPor: 'u1',
+    tareas: [],
+  },
+];
+
+// ------ TAREAS ------
+export const MOCK_TAREAS: Tarea[] = [
+  {
+    id: 't1', folio: 'T-001', ordenId: 'ot1', ordenFolio: 'OT-2024-001',
+    descripcion: 'Cambio de aceite y filtro - Inspección 100 hrs',
+    servicioId: 's1', servicioNombre: 'Inspección de 100 Horas',
+    prioridad: 'alta', estado: 'verificada',
+    asignadoA: 'u5', asignadoNombre: 'Téc. Juan López',
+    porcentajeAvance: 100, notas: 'Aceite drenado. Filtro cambiado. 7 qts aceite 15W-50. Sin metal en filtro.',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv1', descripcion: 'Aceite Aeronáutico Lycoming 15W-50', cantidadRequerida: 7, cantidadEntregada: 7 },
+      { inventarioId: 'inv6', descripcion: 'Filtro de Aceite Lycoming', cantidadRequerida: 1, cantidadEntregada: 1 },
+    ],
+    fechaCreacion: '2024-11-01', fechaAsignacion: '2024-11-02', fechaCompletada: '2024-11-03',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't2', folio: 'T-002', ordenId: 'ot1', ordenFolio: 'OT-2024-001',
+    descripcion: 'Reemplazo de bujías - Todos los cilindros',
+    servicioId: 's1', servicioNombre: 'Inspección de 100 Horas',
+    prioridad: 'alta', estado: 'en_progreso',
+    asignadoA: 'u5', asignadoNombre: 'Téc. Juan López',
+    porcentajeAvance: 60, notas: 'Reemplazados cilindros 1 y 2. Pendientes 3 y 4.',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv4', descripcion: 'Bujía Champion REM40E', cantidadRequerida: 8, cantidadEntregada: 4 },
+    ],
+    fechaCreacion: '2024-11-01', fechaAsignacion: '2024-11-02',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't3', folio: 'T-003', ordenId: 'ot1', ordenFolio: 'OT-2024-001',
+    descripcion: 'Inspección de controles de vuelo - Tensión y juego',
+    servicioId: 's1', servicioNombre: 'Inspección de 100 Horas',
+    prioridad: 'media', estado: 'activa',
+    porcentajeAvance: 0, notas: '',
+    evidencias: [],
+    materialesRequeridos: [],
+    fechaCreacion: '2024-11-01',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't4', folio: 'T-004', ordenId: 'ot2', ordenFolio: 'OT-2024-002',
+    descripcion: 'Revisión y lubricación de tren de aterrizaje principal',
+    servicioId: 's4', servicioNombre: 'Revisión de Tren de Aterrizaje',
+    prioridad: 'alta', estado: 'asignada',
+    asignadoA: 'u8', asignadoNombre: 'Téc. Ana García',
+    porcentajeAvance: 0, notas: '',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv14', descripcion: 'Grasa MIL-G-23827', cantidadRequerida: 1, cantidadEntregada: 0 },
+    ],
+    fechaCreacion: '2024-11-05', fechaAsignacion: '2024-11-06',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't5', folio: 'T-005', ordenId: 'ot3', ordenFolio: 'OT-2024-003',
+    descripcion: 'Mantenimiento completo motor Continental IO-550',
+    servicioId: 's3', servicioNombre: 'Mantenimiento de Motor Reciprocante',
+    prioridad: 'critica', estado: 'verificada',
+    asignadoA: 'u5', asignadoNombre: 'Téc. Juan López',
+    porcentajeAvance: 100, notas: 'Motor revisado y dentro de tolerancias. Compresión OK en todos los cilindros.',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv2', descripcion: 'Aceite Continental SAE 40', cantidadRequerida: 10, cantidadEntregada: 10 },
+      { inventarioId: 'inv6', descripcion: 'Filtro de Aceite', cantidadRequerida: 1, cantidadEntregada: 1 },
+    ],
+    fechaCreacion: '2024-10-10', fechaAsignacion: '2024-10-11', fechaCompletada: '2024-10-20',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't6', folio: 'T-006', ordenId: 'ot3', ordenFolio: 'OT-2024-003',
+    descripcion: 'Actualización firmware GPS y revisión de aviónica',
+    servicioId: 's5', servicioNombre: 'Mantenimiento de Aviónica',
+    prioridad: 'media', estado: 'verificada',
+    asignadoA: 'u5', asignadoNombre: 'Téc. Juan López',
+    porcentajeAvance: 100, notas: 'GPS Garmin G1000 actualizado a versión 20.04. ADSB verificado.',
+    evidencias: [],
+    materialesRequeridos: [],
+    fechaCreacion: '2024-10-10', fechaAsignacion: '2024-10-15', fechaCompletada: '2024-10-22',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't7', folio: 'T-007', ordenId: 'ot4', ordenFolio: 'OT-2024-004',
+    descripcion: 'Cambio de bujías y filtros - Servicio rutinario',
+    servicioId: 's13', servicioNombre: 'Suministro de Lubricantes',
+    prioridad: 'baja', estado: 'verificada',
+    asignadoA: 'u8', asignadoNombre: 'Téc. Ana García',
+    porcentajeAvance: 100, notas: 'Servicio completado sin anomalías.',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv4', descripcion: 'Bujía Champion REM40E', cantidadRequerida: 6, cantidadEntregada: 6 },
+      { inventarioId: 'inv6', descripcion: 'Filtro de Aceite', cantidadRequerida: 1, cantidadEntregada: 1 },
+    ],
+    fechaCreacion: '2024-10-20', fechaAsignacion: '2024-10-21', fechaCompletada: '2024-10-24',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't8', folio: 'T-008', ordenId: 'ot5', ordenFolio: 'OT-2024-005',
+    descripcion: 'Inspección de estructura y fuselaje - 500 hrs',
+    servicioId: 's2', servicioNombre: 'Inspección de 500 Horas',
+    prioridad: 'alta', estado: 'activa',
+    porcentajeAvance: 0, notas: '',
+    evidencias: [],
+    materialesRequeridos: [],
+    fechaCreacion: '2024-11-08',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't9', folio: 'T-009', ordenId: 'ot5', ordenFolio: 'OT-2024-005',
+    descripcion: 'Revisión y ajuste del sistema de frenos',
+    servicioId: 's9', servicioNombre: 'Mantenimiento del Sistema de Frenos',
+    prioridad: 'media', estado: 'activa',
+    porcentajeAvance: 0, notas: '',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv8', descripcion: 'Disco de Freno Cessna 182', cantidadRequerida: 2, cantidadEntregada: 0 },
+      { inventarioId: 'inv9', descripcion: 'Pastilla de Freno Cessna 182', cantidadRequerida: 4, cantidadEntregada: 0 },
+    ],
+    fechaCreacion: '2024-11-08',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't10', folio: 'T-010', ordenId: 'ot7', ordenFolio: 'OT-2024-007',
+    descripcion: 'Cambio de aceite y filtros - Motor izquierdo y derecho',
+    servicioId: 's3', servicioNombre: 'Mantenimiento de Motor Reciprocante',
+    prioridad: 'alta', estado: 'asignada',
+    asignadoA: 'u5', asignadoNombre: 'Téc. Juan López',
+    porcentajeAvance: 0, notas: '',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv1', descripcion: 'Aceite Lycoming 15W-50', cantidadRequerida: 12, cantidadEntregada: 0 },
+      { inventarioId: 'inv6', descripcion: 'Filtro de Aceite Lycoming', cantidadRequerida: 2, cantidadEntregada: 0 },
+    ],
+    fechaCreacion: '2024-11-10', fechaAsignacion: '2024-11-11',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't11', folio: 'T-011', ordenId: 'ot8', ordenFolio: 'OT-2024-008',
+    descripcion: 'Desmontaje y diagnóstico de motor Lycoming IO-540',
+    servicioId: 's3', servicioNombre: 'Mantenimiento de Motor Reciprocante',
+    prioridad: 'critica', estado: 'activa',
+    porcentajeAvance: 0, notas: '',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv15', descripcion: 'Anillo de Pistón Lycoming O-360', cantidadRequerida: 1, cantidadEntregada: 0 },
+    ],
+    fechaCreacion: '2024-11-12',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't12', folio: 'T-012', ordenId: 'ot8', ordenFolio: 'OT-2024-008',
+    descripcion: 'Reemplazo de neumáticos principales',
+    servicioId: 's15', servicioNombre: 'Reemplazo de Neumáticos',
+    prioridad: 'media', estado: 'activa',
+    porcentajeAvance: 0, notas: '',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv10', descripcion: 'Neumático Principal 6.00-6', cantidadRequerida: 2, cantidadEntregada: 0 },
+    ],
+    fechaCreacion: '2024-11-12',
+    creadoPor: 'u3',
+  },
+  {
+    id: 't13', folio: 'T-013', ordenId: 'ot9', ordenFolio: 'OT-2024-009',
+    descripcion: 'Servicio de línea diario - Inspección pre-vuelo',
+    servicioId: 's7', servicioNombre: 'Servicio de Línea Diario',
+    prioridad: 'media', estado: 'completada',
+    asignadoA: 'u5', asignadoNombre: 'Téc. Juan López',
+    porcentajeAvance: 100, notas: 'Servicio de línea completado. Aeronave lista para vuelo.',
+    evidencias: [],
+    materialesRequeridos: [
+      { inventarioId: 'inv1', descripcion: 'Aceite Lycoming 15W-50', cantidadRequerida: 1, cantidadEntregada: 1 },
+    ],
+    fechaCreacion: '2024-11-13', fechaAsignacion: '2024-11-13', fechaCompletada: '2024-11-13',
+    creadoPor: 'u3',
+  },
+];
+
+// ------ MOVIMIENTOS DE INVENTARIO ------
+export const MOCK_MOVIMIENTOS: MovimientoInventario[] = [
+  { id: 'm1', inventarioId: 'inv1', inventarioCodigo: 'F-LYC-OIL-50', inventarioDescripcion: 'Aceite Aeronáutico Lycoming 15W-50', tipo: 'salida', cantidad: 7, motivo: 'Tarea T-001 OT-2024-001', referenciaId: 'ot1', referenciaFolio: 'OT-2024-001', fecha: '2024-11-03', registradoPor: 'u7' },
+  { id: 'm2', inventarioId: 'inv6', inventarioCodigo: 'P-FILTER-OIL-LYC', inventarioDescripcion: 'Filtro de Aceite Lycoming', tipo: 'salida', cantidad: 1, motivo: 'Tarea T-001 OT-2024-001', referenciaId: 'ot1', referenciaFolio: 'OT-2024-001', fecha: '2024-11-03', registradoPor: 'u7' },
+  { id: 'm3', inventarioId: 'inv4', inventarioCodigo: 'P-SPARK-REM40E', inventarioDescripcion: 'Bujía Champion REM40E', tipo: 'salida', cantidad: 4, motivo: 'Tarea T-002 OT-2024-001 (parcial)', referenciaId: 'ot1', referenciaFolio: 'OT-2024-001', fecha: '2024-11-04', registradoPor: 'u7' },
+  { id: 'm4', inventarioId: 'inv1', inventarioCodigo: 'F-LYC-OIL-50', inventarioDescripcion: 'Aceite Aeronáutico Lycoming 15W-50', tipo: 'entrada', cantidad: 24, motivo: 'Recepción de mercancía - Pedido PO-2024-112', fecha: '2024-10-28', registradoPor: 'u7' },
+  { id: 'm5', inventarioId: 'inv10', inventarioCodigo: 'P-TIRE-MAIN-600-6', inventarioDescripcion: 'Neumático Principal 6.00-6', tipo: 'entrada', cantidad: 4, motivo: 'Recepción de mercancía - Pedido PO-2024-098', fecha: '2024-10-15', registradoPor: 'u7' },
+  { id: 'm6', inventarioId: 'inv5', inventarioCodigo: 'P-SPARK-RHB32E', inventarioDescripcion: 'Bujía Champion RHB32E', tipo: 'salida', cantidad: 4, motivo: 'Tarea T-007 OT-2024-004', referenciaId: 'ot4', referenciaFolio: 'OT-2024-004', fecha: '2024-10-22', registradoPor: 'u7' },
+];
