@@ -1,8 +1,9 @@
 import { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import { useTheme } from '../../hooks/useTheme';
 import { ROLE_LABELS } from '../../utils/permissions';
+import toast from 'react-hot-toast';
 
 interface HeaderProps {
   onToggleSidebar: () => void;
@@ -31,10 +32,19 @@ const MOCK_NOTIFS = [
 ];
 
 export const Header = ({ onToggleSidebar, title }: HeaderProps) => {
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const { isDark, toggle } = useTheme();
   const location = useLocation();
+  const navigate = useNavigate();
   const [showNotifs, setShowNotifs] = useState(false);
+  const [showUserMenu, setShowUserMenu] = useState(false);
+
+  const handleLogout = () => {
+    setShowUserMenu(false);
+    logout();
+    toast.success('Sesion cerrada');
+    navigate('/login');
+  };
 
   const breadcrumb = BREADCRUMB_MAP[location.pathname];
 
@@ -201,17 +211,71 @@ export const Header = ({ onToggleSidebar, title }: HeaderProps) => {
           )}
         </div>
 
-        {/* User chip */}
+        {/* User chip con dropdown */}
         {user && (
-          <div className="user-chip">
-            <div className="user-chip-avatar">
-              {getInitials(user.nombre)}
+          <div style={{ position: 'relative' }}>
+            <div className="user-chip" onClick={() => setShowUserMenu((v) => !v)}>
+              <div className="user-chip-avatar">
+                {getInitials(user.nombre)}
+              </div>
+              <div>
+                <div className="user-chip-name">{user.nombre.split(' ')[0]}</div>
+                <div className="user-chip-role">{ROLE_LABELS[user.rol]}</div>
+              </div>
+              <i className="pi pi-chevron-down" style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }} />
             </div>
-            <div>
-              <div className="user-chip-name">{user.nombre.split(' ')[0]}</div>
-              <div className="user-chip-role">{ROLE_LABELS[user.rol]}</div>
-            </div>
-            <i className="pi pi-chevron-down" style={{ fontSize: '0.7rem', color: 'var(--text-muted)' }} />
+
+            {showUserMenu && (
+              <>
+                <div
+                  style={{ position: 'fixed', inset: 0, zIndex: 998 }}
+                  onClick={() => setShowUserMenu(false)}
+                />
+                <div style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 8px)',
+                  right: 0,
+                  width: '240px',
+                  background: 'var(--bg-surface)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '10px',
+                  boxShadow: 'var(--shadow-lg)',
+                  zIndex: 999,
+                  overflow: 'hidden',
+                }}>
+                  <div style={{ padding: '1rem 1.2rem', borderBottom: '1px solid var(--border-light)' }}>
+                    <div style={{ fontWeight: 700, fontSize: '0.95rem', color: 'var(--text-primary)' }}>
+                      {user.nombre}
+                    </div>
+                    <div style={{ fontSize: '0.82rem', color: 'var(--color-primary-500)', fontWeight: 600 }}>
+                      {ROLE_LABELS[user.rol]}
+                    </div>
+                    <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)', marginTop: '0.15rem' }}>
+                      {user.email}
+                    </div>
+                  </div>
+                  <div
+                    onClick={handleLogout}
+                    style={{
+                      padding: '0.85rem 1.2rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      cursor: 'pointer',
+                      color: 'var(--color-danger)',
+                      fontSize: '0.9rem',
+                      fontWeight: 600,
+                      transition: 'background 0.15s',
+                    }}
+                    onMouseEnter={(e) => (e.currentTarget.style.background = 'var(--bg-surface-2)')}
+                    onMouseLeave={(e) => (e.currentTarget.style.background = 'transparent')}
+                  >
+                    <i className="pi pi-sign-out" />
+                    Cerrar Sesion
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         )}
       </div>
