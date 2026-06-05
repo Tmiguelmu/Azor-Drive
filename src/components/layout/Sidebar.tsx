@@ -142,21 +142,6 @@ export const Sidebar = ({ collapsed, mobileOpen, onCloseMobile }: SidebarProps) 
           ))}
         </div>
 
-        {/* Footer */}
-        <div className="sidebar-footer">
-          <Button
-            icon="pi pi-sign-out"
-            label={collapsed ? undefined : 'Cerrar Sesion'}
-            className="p-button-text p-button-sm"
-            style={{
-              color: 'rgba(255,255,255,0.6)',
-              width: '100%',
-              justifyContent: collapsed ? 'center' : 'flex-start',
-              padding: collapsed ? '0.5rem' : '0.5rem 0.75rem',
-            }}
-            onClick={handleLogout}
-          />
-        </div>
       </nav>
     </>
   );
